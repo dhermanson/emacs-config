@@ -79,6 +79,16 @@ Disable package.el on startup.
 
 ** packages
 
+*** ediff
+#+BEGIN_SRC emacs-lisp
+  ;; ediff
+  (use-package ediff
+    :straight (:type built-in)
+    :init
+    (setopt ediff-window-setup-function 'ediff-setup-windows-plain))
+#+END_SRC
+
+
 *** org-mode
 
 #+BEGIN_SRC emacs-lisp
@@ -86,7 +96,9 @@ Disable package.el on startup.
   (use-package org
     :straight (:type built-in)
     :init
-    (setq org-adapt-indentation t)
+    (setq org-adapt-indentation t
+          org-hide-leading-stars t
+          org-startup-indented t)
     )
 #+END_SRC
 
@@ -96,8 +108,12 @@ Disable package.el on startup.
   (use-package evil
     :straight t
     :init
-    (setq evil-undo-system 'undo-redo)
+    (setq evil-undo-system 'undo-redo
+          evil-default-state 'emacs)
+
     :config
+    (evil-set-initial-state 'prog-mode 'normal)
+    (evil-set-initial-state 'fundamental-mode 'normal)
     (evil-mode 1))
 #+END_SRC
 
