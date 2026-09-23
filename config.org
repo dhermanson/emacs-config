@@ -7,11 +7,22 @@
 :header-args:emacs-lisp+: :mkdirp yes
 :END:
 
-Disable package.el on startup.
+** lexical scope
 #+BEGIN_SRC emacs-lisp
   ;;; -*- lexical-binding: t; -*-
 
+#+END_SRC
+
+** disable package.el on startup
+#+BEGIN_SRC emacs-lisp
   (setq package-enable-at-startup nil)
+#+END_SRC
+
+** turn off menu-bar, tool-bar, and scroll-bar
+#+BEGIN_SRC emacs-lisp
+  (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 #+END_SRC
 
 * init.el
@@ -20,6 +31,7 @@ Disable package.el on startup.
 :header-args:emacs-lisp+: :mkdirp yes
 :END:
 
+** lexical scope
 #+BEGIN_SRC emacs-lisp
   ;;; -*- lexical-binding: t; -*-
 #+END_SRC
@@ -47,6 +59,8 @@ Disable package.el on startup.
 #+END_SRC
 
 ** general settings
+
+*** backups, indents, tab widths
 #+BEGIN_SRC emacs-lisp
 
 
@@ -64,6 +78,20 @@ Disable package.el on startup.
 
 #+END_SRC
 
+
+*** line numbers
+#+BEGIN_SRC emacs-lisp
+  (setq display-line-numbers 'visual)
+#+END_SRC
+
+*** appearance
+
+**** theme
+#+BEGIN_SRC emacs-lisp
+  (load-theme 'modus-operandi t)
+#+END_SRC
+
+
 ** packages
 
 *** ediff
@@ -72,7 +100,10 @@ Disable package.el on startup.
   (use-package ediff
     :straight (:type built-in)
     :init
-    (setopt ediff-window-setup-function 'ediff-setup-windows-plain))
+    (setq ediff-window-setup-function 'ediff-setup-windows-plain
+          ediff-split-window-function 'split-window-horizontally
+          ediff-highlight-all-diffs t
+          ediff-diff-options "-w"))
 #+END_SRC
 
 
