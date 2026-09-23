@@ -1,0 +1,115 @@
+#+TITLE: My Emacs Configuration
+#+AUTHOR: Derick Hermanson
+
+* early-init.el
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle ~/.config/emacs/early-init.el
+:header-args:emacs-lisp+: :mkdirp yes
+:END:
+
+Disable package.el on startup.
+#+BEGIN_SRC emacs-lisp
+  ;;; -*- lexical-binding: t; -*-
+
+  (setq package-enable-at-startup nil)
+#+END_SRC
+
+* init.el
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle ~/.config/emacs/init.el
+:header-args:emacs-lisp+: :mkdirp yes
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;; -*- lexical-binding: t; -*-
+#+END_SRC
+
+** straight.el
+#+BEGIN_SRC emacs-lisp
+  ;; initialize straight.el
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+              user-emacs-directory)))
+        (bootstrap-version 7))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+  (setq straight-use-package-by-default t)
+#+END_SRC
+
+** general settings
+#+BEGIN_SRC emacs-lisp
+
+
+  ;; Disable backup files (e.g., filename~)
+  (setq make-backup-files nil)
+
+  ;; Disable auto-save files (e.g., #filename#)
+  (setq auto-save-default nil)
+
+  ;; Use spaces instead of tabs globally
+  (setq-default indent-tabs-mode nil)
+
+  ;; Set the preferred width of a tab/indentation step (e.g., 4 spaces)
+  (setq-default tab-width 4)
+
+  ;; install evil mode
+  (use-package evil
+    :straight t
+    :init
+    (setq evil-undo-system 'undo-redo)
+    :config
+    (evil-mode 1))
+
+  ;; install magit
+  (use-package magit
+    :straight t)
+
+  (provide 'init)
+#+END_SRC
+
+** packages
+
+*** org-mode
+
+#+BEGIN_SRC emacs-lisp
+  ;; org
+  (use-package org
+    :straight (:type built-in)
+    :init
+    (setq org-adapt-indentation t)
+    )
+#+END_SRC
+
+*** evil
+#+BEGIN_SRC emacs-lisp
+  ;; evil
+  (use-package evil
+    :straight t
+    :init
+    (setq evil-undo-system 'undo-redo)
+    :config
+    (evil-mode 1))
+#+END_SRC
+
+*** magit
+#+BEGIN_SRC emacs-lisp
+  ;; magit
+  (use-package magit
+    :straight t)
+#+END_SRC
+
+** provide
+
+#+BEGIN_SRC emacs-lisp
+  (provide 'init)
+#+END_SRC
