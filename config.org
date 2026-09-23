@@ -127,7 +127,11 @@
     :straight t
     :init
     (setq evil-undo-system 'undo-redo
-          evil-default-state 'emacs)
+          evil-default-state 'emacs
+          evil-want-C-u-scroll t
+          evil-disable-insert-state-bindings t
+          evil-want-keybinding nil
+          evil-respect-visual-line-mode nil)
 
     :config
     (evil-set-initial-state 'prog-mode 'normal)
