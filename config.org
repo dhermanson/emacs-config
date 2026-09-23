@@ -62,13 +62,14 @@
 
 *** backups, indents, tab widths
 #+BEGIN_SRC emacs-lisp
-
-
   ;; Disable backup files (e.g., filename~)
   (setq make-backup-files nil)
 
   ;; Disable auto-save files (e.g., #filename#)
   (setq auto-save-default nil)
+
+  ;; don't create .# files
+  (setq create-lockfiles nil)
 
   ;; Use spaces instead of tabs globally
   (setq-default indent-tabs-mode nil)
@@ -76,6 +77,16 @@
   ;; Set the preferred width of a tab/indentation step (e.g., 4 spaces)
   (setq-default tab-width 4)
 
+#+END_SRC
+
+
+
+*** auto-revert mode
+Whenever an external process changes a file underneath emacs and there were no unsaved changes in the corresponding buffer, just rever its content to reflect what's on disk
+
+#+BEGIN_SRC emacs-lisp
+  (global-auto-revert-mode 1)
+  (setq auto-revert-verbose nil)
 #+END_SRC
 
 
