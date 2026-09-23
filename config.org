@@ -62,19 +62,6 @@ Disable package.el on startup.
   ;; Set the preferred width of a tab/indentation step (e.g., 4 spaces)
   (setq-default tab-width 4)
 
-  ;; install evil mode
-  (use-package evil
-    :straight t
-    :init
-    (setq evil-undo-system 'undo-redo)
-    :config
-    (evil-mode 1))
-
-  ;; install magit
-  (use-package magit
-    :straight t)
-
-  (provide 'init)
 #+END_SRC
 
 ** packages
@@ -114,6 +101,7 @@ Disable package.el on startup.
     :config
     (evil-set-initial-state 'prog-mode 'normal)
     (evil-set-initial-state 'fundamental-mode 'normal)
+    (evil-set-initial-state 'org-mode 'normal)
     (evil-mode 1))
 #+END_SRC
 
@@ -124,7 +112,7 @@ Disable package.el on startup.
     :straight t)
 #+END_SRC
 
-** provide
+** provide init
 
 #+BEGIN_SRC emacs-lisp
   (provide 'init)
