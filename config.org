@@ -70,8 +70,8 @@ use y or n instead of yes or no
 *** backspace/help
 
 #+BEGIN_SRC emacs-lisp
-  (global-set-key [(control ?h)] 'delete-backward-char)
-  (global-set-key (kbd "M-?") 'help-command)
+  ;; (global-set-key [(control ?h)] 'delete-backward-char)
+  ;; (global-set-key (kbd "M-?") 'help-command)
 #+END_SRC
 
 *** visible bell
@@ -322,6 +322,29 @@ don't show the startup screen
 
 
 
+
+**** tabsession
+
+#+BEGIN_SRC emacs-lisp
+  (use-package tabsession
+    :straight ( :type git
+                :host github
+                :repo "dhermanson/tabsession" )
+    :bind-keymap
+    ("s-t" . tabsession-keymap)
+    :config
+    (tabsession-mode 1))
+#+END_SRC
+
+**** pdf-tools
+
+#+BEGIN_SRC emacs-lisp
+  (use-package pdf-tools
+    :mode ("\\.pdf\\'" . pdf-view-mode)
+    :magic ("%PDF" . pdf-view-mode)
+    :config
+    (pdf-tools-install))
+#+END_SRC
 ** hooks
 
 
