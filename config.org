@@ -164,6 +164,7 @@ don't show the startup screen
 
 *** built-ins
 
+
 **** windmove
 #+BEGIN_SRC emacs-lisp
   (use-package windmove
@@ -222,6 +223,16 @@ don't show the startup screen
     )
 #+END_SRC
 
+
+**** keyfreq
+
+#+BEGIN_SRC emacs-lisp
+  (use-package keyfreq
+      :straight t
+      :config
+      (keyfreq-mode 1)
+      (keyfreq-autosave-mode))
+#+END_SRC
 
 *** extra
 
