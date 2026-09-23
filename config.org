@@ -60,6 +60,13 @@
 
 ** general settings
 
+*** ux
+
+use y or n instead of yes or no
+#+BEGIN_SRC emacs-lisp
+  (setq use-short-answers t)
+#+END_SRC
+
 *** backups, indents, tab widths
 #+BEGIN_SRC emacs-lisp
   ;; Disable backup files (e.g., filename~)
@@ -91,15 +98,29 @@ Whenever an external process changes a file underneath emacs and there were no u
 
 
 *** line numbers
+
 #+BEGIN_SRC emacs-lisp
   (setq display-line-numbers 'visual)
 #+END_SRC
 
 *** appearance
 
+**** startup screen
+don't show the startup screen
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-screen t)
+#+END_SRC
+
 **** theme
 #+BEGIN_SRC emacs-lisp
   (load-theme 'modus-operandi t)
+#+END_SRC
+
+
+*** shell
+#+BEGIN_SRC emacs-lisp
+  (setq sh-shell "zsh")
 #+END_SRC
 
 
@@ -156,6 +177,74 @@ Whenever an external process changes a file underneath emacs and there were no u
   ;; magit
   (use-package magit
     :straight t)
+#+END_SRC
+
+
+
+*** smartparens
+
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :straight t
+    :hook (prog-mode . smartparens-mode)
+    :config
+    ;; Load the highly-optimized default configuration rules
+    (require 'smartparens-config)
+    
+    ;; Optional: Highlights matching pairs visually
+    (show-smartparens-global-mode t)
+    
+    ;; Optional: If you want strict structural safety (like Paredit)
+    ;; (smartparens-strict-mode t)
+    
+    :bind (:map smartparens-mode-map
+                ;; Example replacements for modern, conflict-free wrapping/unwrapping
+                ("M-[" . sp-wrap-square)
+                ("M-{" . sp-wrap-curly)
+                ("C-M-d" . sp-unwrap-sexp)))
+
+#+END_SRC
+
+
+*** direnv
+
+#+BEGIN_SRC emacs-lisp
+  (use-package direnv
+    :straight t
+    :config
+    (direnv-mode))
+
+#+END_SRC
+
+
+
+*** embark
+
+#+BEGIN_SRC emacs-lisp
+  (use-package embark
+    :straight t
+
+    :bind
+    (("C-."   . embark-act)         ; Pick an action for the target at point
+     ("M-."   . embark-dwim)        ; Run the default action for the target at point
+     ("C-h B" . embark-bindings))   ; Alternative for `describe-bindings`
+
+    :init
+    ;; Replace the standard prefix help with a detailed Embark contextual menu
+    (setq prefix-help-command #'embark-prefix-help-command)
+
+    :config
+    ;; Hide the mode line of the Embark live/collect buffers
+    (add-to-list 'display-buffer-alist
+                 '("\\`\\*Embark Collect \\(Live\Vert{}Completions\\)\\*"
+                   (nil (window-parameters (mode-line-format . none))))))
+
+  ;; Optional but highly recommended if you use the Consult package
+  (use-package embark-consult
+    :straight t
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
+
 #+END_SRC
 
 ** provide init
