@@ -193,7 +193,7 @@ don't show the startup screen
   (use-package grep
     :straight (:type built-in)
     :config
-    (grep-apply-setting 'grep-command "rg -H --no-heading -n --color never")
+    (grep-apply-setting 'grep-command "rg -H --no-heading -n --color never ")
     (grep-apply-setting 'grep-use-null-device nil))
 #+END_SRC
 
