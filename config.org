@@ -380,6 +380,26 @@ don't show the startup screen
 
 *** ibuffer
 
+
+
+** helpers
+
+*** open in intellij
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/helpers/open-current-line-in-intellij ()
+    "Open the current line in intellij."
+    (interactive)
+    (let* ((line-number (number-to-string (line-number-at-pos)))
+           (file (buffer-file-name)))
+      (call-process "idea" nil nil nil "--line" line-number file)))
+
+  (define-key global-map (kbd "C-c o i") #'my/helpers/open-current-line-in-intellij)
+#+END_SRC
+
+
+*** codex/claude
+
 ** provide init
 
 #+BEGIN_SRC emacs-lisp
