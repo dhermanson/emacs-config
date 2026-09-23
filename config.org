@@ -67,6 +67,33 @@ use y or n instead of yes or no
   (setq use-short-answers t)
 #+END_SRC
 
+*** backspace/help
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key [(control ?h)] 'delete-backward-char)
+  (global-set-key (kbd "M-?") 'help-command)
+#+END_SRC
+
+*** visible bell
+turn off visible bell and specify a custom ring-bell-function which flaces the mode line
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/flash-mode-line ()
+    (invert-face 'mode-line)
+    (run-with-timer 0.1 nil #'invert-face 'mode-line))
+
+  (setq visible-bell nil
+        ring-bell-function 'my/flash-mode-line)
+#+END_SRC
+
+
+*** custom file
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file 'noerror)
+#+END_SRC
+
+
 *** backups, indents, tab widths
 #+BEGIN_SRC emacs-lisp
   ;; Disable backup files (e.g., filename~)
@@ -93,6 +120,7 @@ Whenever an external process changes a file underneath emacs and there were no u
 
 #+BEGIN_SRC emacs-lisp
   (global-auto-revert-mode 1)
+  (setq global-auto-revert-non-file-buffers t)
   (setq auto-revert-verbose nil)
 #+END_SRC
 
@@ -112,6 +140,14 @@ don't show the startup screen
   (setq inhibit-startup-screen t)
 #+END_SRC
 
+
+
+**** initial scratch message
+#+BEGIN_SRC emacs-lisp
+  (setq initial-scratch-message "")
+#+END_SRC
+
+
 **** theme
 #+BEGIN_SRC emacs-lisp
   (load-theme 'modus-operandi t)
@@ -126,7 +162,41 @@ don't show the startup screen
 
 ** packages
 
-*** ediff
+*** built-ins
+
+**** windmove
+#+BEGIN_SRC emacs-lisp
+  (use-package windmove
+    :straight (:type built-in)
+    :bind
+    (("s-h"   . windmove-left)
+     ("s-j"   . windmove-down)
+     ("s-k"   . windmove-up)
+     ("s-l"   . windmove-right)))
+#+END_SRC
+
+**** savehist
+#+BEGIN_SRC emacs-lisp
+  (use-package savehist
+    :straight (:type built-in)
+    :init
+    (setq savehist-additional-variables '(register-alist))
+    :config
+    (savehist-mode 1))
+
+#+END_SRC
+
+**** grep
+
+#+BEGIN_SRC emacs-lisp
+  (use-package grep
+    :straight (:type built-in)
+    :config
+    (grep-apply-setting 'grep-command "rg -H --no-heading -n --color never")
+    (grep-apply-setting 'grep-use-null-device nil))
+#+END_SRC
+
+**** ediff
 #+BEGIN_SRC emacs-lisp
   ;; ediff
   (use-package ediff
@@ -139,7 +209,7 @@ don't show the startup screen
 #+END_SRC
 
 
-*** org-mode
+**** org-mode
 
 #+BEGIN_SRC emacs-lisp
   ;; org
@@ -152,7 +222,10 @@ don't show the startup screen
     )
 #+END_SRC
 
-*** evil
+
+*** extra
+
+**** evil
 #+BEGIN_SRC emacs-lisp
   ;; evil
   (use-package evil
@@ -172,7 +245,7 @@ don't show the startup screen
     (evil-mode 1))
 #+END_SRC
 
-*** magit
+**** magit
 #+BEGIN_SRC emacs-lisp
   ;; magit
   (use-package magit
@@ -181,7 +254,7 @@ don't show the startup screen
 
 
 
-*** smartparens
+**** smartparens
 
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
@@ -206,7 +279,7 @@ don't show the startup screen
 #+END_SRC
 
 
-*** direnv
+**** direnv
 
 #+BEGIN_SRC emacs-lisp
   (use-package direnv
@@ -218,7 +291,7 @@ don't show the startup screen
 
 
 
-*** embark
+**** embark
 
 #+BEGIN_SRC emacs-lisp
   (use-package embark
@@ -246,6 +319,32 @@ don't show the startup screen
     (embark-collect-mode . consult-preview-at-point-mode))
 
 #+END_SRC
+
+
+
+** hooks
+
+
+*** standard
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/hooks/standard ()
+    "My standard hook."
+    (setq display-line-numbers 'visual)
+    (setq display-line-numbers-widen t)
+
+    (visual-line-mode nil)
+    (modify-syntax-entry ?_ "w")
+    (hl-line-mode t))
+
+  (add-hook 'prog-mode-hook 'my/hooks/standard)
+  (add-hook 'conf-mode-hook 'my/hooks/standard)
+  (add-hook 'fundamental-mode-hook 'my/hooks/standard)
+  (add-hook 'text-mode-hook 'my/hooks/standard)
+#+END_SRC
+
+
+*** ibuffer
 
 ** provide init
 
