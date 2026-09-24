@@ -477,6 +477,7 @@ don't show the startup screen
 #+BEGIN_SRC emacs-lisp
   (keymap-global-unset "s-m")
   (keymap-global-unset "s-o")
+  (keymap-global-unset "s-q")
   (keymap-global-unset "s-s")
 
   (keymap-global-set "s-t" tabsession-keymap)
