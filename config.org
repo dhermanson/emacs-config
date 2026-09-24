@@ -280,7 +280,9 @@ don't show the startup screen
 #+BEGIN_SRC emacs-lisp
   ;; magit
   (use-package magit
-    :straight t)
+    :straight t
+    :bind (:map magit-status-mode-map
+                ("s-m e" . #'my/helpers/magit-status-ediff-current-file)))
 #+END_SRC
 
 
@@ -429,6 +431,18 @@ don't show the startup screen
 
 *** codex/claude
 
+
+*** magit-status-mode oediff current file
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/helpers/magit-status-ediff-current-file ()
+    (interactive)
+    (magit-section-case
+      (t (let* (($current-file (magit-current-file)))
+           (when $current-file
+             (`unstaged (magit-ediff-show-unstaged $current-file))
+             (`staged (magit-ediff-show-staged $current-file)))))))
+#+END_SRC
 ** provide init
 
 #+BEGIN_SRC emacs-lisp
