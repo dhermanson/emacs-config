@@ -247,14 +247,13 @@ don't show the startup screen
 #+END_SRC
 
 
-**** package
+**** project
 
 #+BEGIN_SRC emacs-lisp
-  (use-package package
+  (use-package project
     :straight (:type built-in)
-    :after magit
     :config
-    (keymap-set project-prefix-map "v" #'magit-status))
+    (add-to-list 'project-switch-commands '(project-dired "Dired" ?D) t))
 #+END_SRC
 
 *** extra
@@ -296,6 +295,7 @@ don't show the startup screen
   (use-package magit
     :straight t
     :config
+    (keymap-set project-prefix-map "v" #'magit-status)
     (transient-append-suffix 'magit-file-dispatch "G"
       '("o" "magit-status" magit-status)))
       #+END_SRC
@@ -370,6 +370,16 @@ don't show the startup screen
 
 
 
+
+
+**** ghostel
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ghostel
+    :straight t
+    :config
+    (add-to-list 'project-switch-commands '(ghostel-project "Ghostel" ?t) t))
+#+END_SRC
 
 **** tabsession
 
