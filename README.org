@@ -1,0 +1,7 @@
+#+TITLE: My Emacs Configuration
+
+* todos
+
+** TODO treesitter/modes
+** TODO treemacs
+** TODO keybindings

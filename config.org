@@ -253,15 +253,26 @@ don't show the startup screen
     :init
     (setq evil-undo-system 'undo-redo
           evil-default-state 'emacs
+          evil-want-C-d-scroll t
           evil-want-C-u-scroll t
           evil-disable-insert-state-bindings t
+          evil-respect-visual-line-mode nil
           evil-want-keybinding nil
-          evil-respect-visual-line-mode nil)
-
+          evil-v$-excludes-newline t
+          evil-kill-on-visual-paste nil
+          evil-split-window-below t
+          evil-vsplit-window-right t)
     :config
-    (evil-set-initial-state 'prog-mode 'normal)
+    ;; prefer emacs state to motion state
+    (dolist (mode evil-motion-state-modes)
+      (evil-set-initial-state mode 'emacs))
     (evil-set-initial-state 'fundamental-mode 'normal)
+    (evil-set-initial-state 'text-mode 'normal)
+    (evil-set-initial-state 'prog-mode 'normal)
+    (evil-set-initial-state 'conf-mode 'normal)
+    (evil-set-initial-state 'dired-mode 'emacs)
     (evil-set-initial-state 'org-mode 'normal)
+    (evil-set-initial-state 'xref--xref-buffer-mode 'normal)
     (evil-mode 1))
 #+END_SRC
 
