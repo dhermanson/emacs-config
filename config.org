@@ -164,12 +164,6 @@ don't show the startup screen
 #+BEGIN_SRC emacs-lisp
   (use-package dired
     :straight (:type built-in)
-    :commands (dired dired-jump)
-    :init
-    ;; Load Dired-X for extra features (like omitting files)
-    (with-eval-after-load 'dired
-      (require 'dired-x))
-    
     :config
     ;; 1. Prevent creating a new buffer for every directory you visit
     (setq dired-kill-when-opening-new-dired-buffer t)
