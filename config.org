@@ -197,6 +197,15 @@ don't show the startup screen
     (grep-apply-setting 'grep-use-null-device nil))
 #+END_SRC
 
+**** ibuffer
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ibuffer
+    :straight (:type built-in)
+    :config
+    (setq ibuffer-use-other-window t))
+#+END_SRC
+
 **** ediff
 #+BEGIN_SRC emacs-lisp
   ;; ediff
@@ -379,6 +388,15 @@ don't show the startup screen
 
 
 *** ibuffer
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/hooks/ibuffer-mode-hook ()
+    "My ibuffer mode hook."
+    (interactive)
+    (hl-line-mode t))
+
+  (add-hook 'ibuffer-mode-hook #'my/hooks/ibuffer-mode-hook)
+#+END_SRC
 
 
 
