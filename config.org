@@ -159,6 +159,14 @@ don't show the startup screen
 
 *** built-ins
 
+**** use-package
+
+#+BEGIN_SRC emacs-lisp
+  ;; Force all packages to load immediately instead of lazy-loading
+  ;; I load emacs once, and use emacsclient when necessary
+  (setq use-package-always-demand t)
+#+END_SRC
+
 
 **** windmove
 #+BEGIN_SRC emacs-lisp
@@ -475,7 +483,7 @@ don't show the startup screen
     (kbd "<leader>oi") 'my/helpers/open-current-line-in-intellij)
 
   (evil-define-key 'visual prog-mode-map
-    "g c" 'comment-or-uncomment-region)
+    "gc" 'comment-or-uncomment-region)
   ;; (keymap-set evil-normal-state-map "g c c" #'comment-line)
   ;; (keymap-set evil-visual-state-map "g c"   #'comment-or-uncomment-region)
 
