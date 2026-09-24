@@ -15,3 +15,4 @@
 apparently it's built-in now
 ** TODO completion-preview-mode
 - see [[https://protesilaos.com/codelog/2026-08-29-emacs-completion-preview-mode/]]
+** TODO setup org-mode, org directory, agenda, etc
