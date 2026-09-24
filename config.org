@@ -213,7 +213,7 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
   (use-package which-key
     :straight (:type built-in)
     :config
-    (which-key-mode 1)
+    (which-key-mode 1))
 #+END_SRC
 
 **** windmove
