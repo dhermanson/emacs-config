@@ -207,6 +207,14 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
   (setq use-package-always-demand t)
 #+END_SRC
 
+**** which-key
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :straight (:type built-in)
+    :config
+    (which-key-mode 1)
+#+END_SRC
 
 **** windmove
 #+BEGIN_SRC emacs-lisp

@@ -17,3 +17,4 @@ apparently it's built-in now
 - see [[https://protesilaos.com/codelog/2026-08-29-emacs-completion-preview-mode/]]
 ** TODO setup org-mode, org directory, agenda, etc
 ** TODO configure magit
+** TODO add project function which rungs project-grep
