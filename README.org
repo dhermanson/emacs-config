@@ -3,5 +3,11 @@
 * todos
 
 ** TODO treesitter/modes
+- there might be a treesitter auto mode
 ** TODO treemacs
 ** TODO keybindings
+** TODO add custom magit function to project-prefix-map
+** TODO add a custom function to the magit-file-dispatch so that it just loads magit
+** TODO add a custom function to the magit-file-dispatch to do
+- [ ] diff staged
+- [ ] diff unstaged

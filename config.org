@@ -238,6 +238,17 @@ don't show the startup screen
       (keyfreq-autosave-mode))
 #+END_SRC
 
+
+**** package
+
+#+BEGIN_SRC emacs-lisp
+  (use-package package
+    :straight (:type built-in)
+    :after magit
+    :config
+    (keymap-set project-prefix-map "v" #'magit-status))
+#+END_SRC
+
 *** extra
 
 **** evil
@@ -276,9 +287,10 @@ don't show the startup screen
   ;; magit
   (use-package magit
     :straight t
-    :bind (:map magit-status-mode-map
-                ("s-m e" . #'my/helpers/magit-status-ediff-current-file)))
-#+END_SRC
+    :config
+    (transient-append-suffix 'magit-file-dispatch "G"
+      '("o" "magit-status" magit-status)))
+      #+END_SRC
 
 
 
@@ -358,8 +370,8 @@ don't show the startup screen
     :straight ( :type git
                 :host github
                 :repo "dhermanson/tabsession" )
-    :bind-keymap
-    ("s-t" . tabsession-keymap)
+    ;; :bind-keymap
+    ;; ("s-t" . tabsession-keymap)
     :config
     (tabsession-mode 1))
 #+END_SRC
@@ -420,14 +432,13 @@ don't show the startup screen
            (file (buffer-file-name)))
       (call-process "idea" nil nil nil "--line" line-number file)))
 
-  (define-key global-map (kbd "C-c o i") #'my/helpers/open-current-line-in-intellij)
 #+END_SRC
 
 
 *** codex/claude
 
 
-*** magit-status-mode oediff current file
+*** magit-status-mode ediff current file
 
 #+BEGIN_SRC emacs-lisp
   (defun my/helpers/magit-status-ediff-current-file ()
@@ -440,6 +451,41 @@ don't show the startup screen
                (`staged (magit-ediff-show-staged $current-file))))))))
 #+END_SRC
 
+
+
+** keybindings
+
+
+#+BEGIN_SRC emacs-lisp
+  (keymap-global-unset "s-m")
+  (keymap-global-unset "s-o")
+  (keymap-global-unset "s-s")
+
+  (keymap-global-set "s-t" tabsession-keymap)
+  (keymap-global-set "s-p" project-prefix-map)
+  (keymap-global-set "s-o" #'delete-other-windows)
+  (keymap-global-set "s-c" #'delete-window)
+  (keymap-global-set "s-s" #'save-buffer)
+  (keymap-global-set "s-g" #'magit-file-dispatch)
+  (keymap-global-set "M-s-g" #'magit-status)
+
+  (evil-set-leader 'normal (kbd "SPC"))
+  (evil-define-key 'normal prog-mode-map
+    "gcc" 'comment-line
+    (kbd "<leader>oi") 'my/helpers/open-current-line-in-intellij)
+
+  (evil-define-key 'visual prog-mode-map
+    "g c" 'comment-or-uncomment-region)
+  ;; (keymap-set evil-normal-state-map "g c c" #'comment-line)
+  ;; (keymap-set evil-visual-state-map "g c"   #'comment-or-uncomment-region)
+
+  (keymap-set magit-status-mode-map "s-m e"  #'my/helpers/magit-status-ediff-current-file)
+  (keymap-set magit-status-mode-map "s-e"  #'my/helpers/magit-status-ediff-current-file)
+
+  ;; (keymap-set prog-mode-map "s-m o i" #'my/helpers/open-current-line-in-intellij)
+
+
+#+END_SRC
 
 ** closing items
 
