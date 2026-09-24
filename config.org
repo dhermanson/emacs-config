@@ -440,8 +440,9 @@ don't show the startup screen
     (magit-section-case
       (t (let* (($current-file (magit-current-file)))
            (when $current-file
-             (`unstaged (magit-ediff-show-unstaged $current-file))
-             (`staged (magit-ediff-show-staged $current-file)))))))
+             (pcase (magit-diff-type)
+               (`unstaged (magit-ediff-show-unstaged $current-file))
+               (`staged (magit-ediff-show-staged $current-file))))))))
 #+END_SRC
 ** provide init
 
