@@ -159,6 +159,50 @@ don't show the startup screen
 
 *** built-ins
 
+**** dired
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dired
+    :straight (:type built-in)
+    :commands (dired dired-jump)
+    :init
+    ;; Load Dired-X for extra features (like omitting files)
+    (with-eval-after-load 'dired
+      (require 'dired-x))
+    
+    :config
+    ;; 1. Prevent creating a new buffer for every directory you visit
+    (setq dired-kill-when-opening-new-dired-buffer t)
+
+    ;; 2. "Do What I Mean" target: If you have two Dired windows open,
+    ;; copying/moving automatically suggests the other window as the target.
+    (setq dired-dwim-target t)
+
+    ;; 3. Sorting and styling (Requires 'ls' or 'gls' on macOS)
+    ;; -h: human-readable sizes, --group-directories-first: folders on top
+    (setq dired-listing-switches "-agho --group-directories-first --time-style=long-iso")
+
+    ;; 4. Streamline operations and safety prompts
+    (setq dired-recursive-copies 'always)      ; Don't ask when copying folders
+    (setq dired-recursive-deletes 'top)        ; Ask once for top-level folder deletion
+    (setq delete-by-moving-to-trash t)         ; Move to system trash instead of wiping
+    (setq dired-clean-confirm-killing-deleted-buffers nil) ; Auto-close dead buffers
+
+    ;; 5. Enable the "find-alternate-file" command (bound to 'a' by default)
+    (put 'dired-find-alternate-file 'disabled nil)
+
+    :hook
+    ;; Hide ugly file details (permissions, links) by default. Toggle with '('
+    (dired-mode . dired-hide-details-mode)
+    ;; Auto-hide hidden/dot files by default. Toggle with '.'
+    (dired-mode . dired-omit-mode)
+
+    :bind
+    ;; Quick shortcut to toggle hidden/dot files
+    (:map dired-mode-map
+          ("." . dired-omit-mode)))
+#+END_SRC
+
 **** use-package
 
 #+BEGIN_SRC emacs-lisp
