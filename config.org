@@ -456,7 +456,7 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 
 **** corfu
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC emacs-lisp
 
   (use-package corfu
     :straight t
@@ -471,7 +471,7 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 
 **** cape
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC emacs-lisp
 (use-package cape
   :straight t
   ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
