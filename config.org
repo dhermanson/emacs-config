@@ -454,6 +454,18 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     (pdf-tools-install))
 #+END_SRC
 
+
+
+**** vertico
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vertico
+    :straight t
+    :config
+    (vertico-mode))
+#+END_SRC
+
+
 **** corfu
 
 #+BEGIN_SRC emacs-lisp
@@ -621,6 +633,9 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     "gc" 'comment-or-uncomment-region)
   ;; (keymap-set evil-normal-state-map "g c c" #'comment-line)
   ;; (keymap-set evil-visual-state-map "g c"   #'comment-or-uncomment-region)
+
+  (evil-define-key 'insert global-map
+    (kbd "C-SPC") 'completion-at-point)
 
   (keymap-set magit-status-mode-map "s-m e"  #'my/helpers/magit-status-ediff-current-file)
   (keymap-set magit-status-mode-map "s-e"  #'my/helpers/magit-status-ediff-current-file)
