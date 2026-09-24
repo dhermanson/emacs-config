@@ -87,11 +87,6 @@ turn off visible bell and specify a custom ring-bell-function which flaces the m
 #+END_SRC
 
 
-*** custom file
-#+BEGIN_SRC emacs-lisp
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (load custom-file 'noerror)
-#+END_SRC
 
 
 *** backups, indents, tab widths
@@ -444,7 +439,18 @@ don't show the startup screen
                (`unstaged (magit-ediff-show-unstaged $current-file))
                (`staged (magit-ediff-show-staged $current-file))))))))
 #+END_SRC
-** provide init
+
+
+** closing items
+
+*** custom file
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file 'noerror)
+#+END_SRC
+
+*** provide init
+
 
 #+BEGIN_SRC emacs-lisp
   (provide 'init)
