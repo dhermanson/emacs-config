@@ -520,16 +520,46 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
   (keymap-global-unset "s-m")
   (keymap-global-unset "s-o")
   (keymap-global-unset "s-q")
+  (keymap-global-unset "s-w")
   (keymap-global-unset "s-s")
 
+  ;; super key bindings
   (keymap-global-set "s-t" tabsession-keymap)
   (keymap-global-set "s-p" project-prefix-map)
+  (keymap-global-set "s-?" #'help-command)
   (keymap-global-set "s-o" #'delete-other-windows)
   (keymap-global-set "s-c" #'delete-window)
+  (keymap-global-set "s-C" #'delete-frame)
   (keymap-global-set "s-q" #'kill-buffer)
   (keymap-global-set "s-n" #'make-frame-command)
   (keymap-global-set "s-s" #'save-buffer)
+  (keymap-global-set "s-|" #'evil-window-vsplit)
+  (keymap-global-set "s-\"" #'evil-window-split)
   (keymap-global-set "s-g" #'magit-file-dispatch)
+  (keymap-global-set "s-H" #'evil-window-move-far-left)
+  (keymap-global-set "s-J" #'evil-window-move-very-bottom)
+  (keymap-global-set "s-K" #'evil-window-move-very-top)
+  (keymap-global-set "s-L" #'evil-window-move-far-right)
+
+  ;; meta key bindings
+  (keymap-global-set "M-o" #'other-window)
+  (keymap-global-set "M-O" '(lambda () (interactive) (other-window -1)))
+
+  ;; control-super key bindings
+  (keymap-global-set "C-s-n" #'tab-next)
+  (keymap-global-set "C-S-s-n" '(lambda ()
+                                (interactive)
+                                (tab-bar-move-tab 1)))
+  (keymap-global-set "C-s-p" #'tab-previous)
+  (keymap-global-set "C-S-s-p" '(lambda ()
+                                (interactive)
+                                (tab-bar-move-tab -1)))
+  (keymap-global-set "C-s-m" #'tab-new)
+  (keymap-global-set "C-s-c" #'tab-close)
+  (keymap-global-set "C-s-r" #'tab-rename)
+
+
+  ;; meta-super key bindings
   (keymap-global-set "M-s-g" #'magit-status)
 
   (evil-set-leader 'normal (kbd "SPC"))
