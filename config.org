@@ -484,6 +484,8 @@ don't show the startup screen
   (keymap-global-set "s-p" project-prefix-map)
   (keymap-global-set "s-o" #'delete-other-windows)
   (keymap-global-set "s-c" #'delete-window)
+  (keymap-global-set "s-q" #'kill-buffer)
+  (keymap-global-set "s-n" #'make-frame-command)
   (keymap-global-set "s-s" #'save-buffer)
   (keymap-global-set "s-g" #'magit-file-dispatch)
   (keymap-global-set "M-s-g" #'magit-status)
