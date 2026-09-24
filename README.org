@@ -11,3 +11,7 @@
 ** TODO add a custom function to the magit-file-dispatch to do
 - [ ] diff staged
 - [ ] diff unstaged
+** TODO editorconfig
+apparently it's built-in now
+** TODO completion-preview-mode
+- see [[https://protesilaos.com/codelog/2026-08-29-emacs-completion-preview-mode/]]
