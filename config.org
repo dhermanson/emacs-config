@@ -418,7 +418,9 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
   (use-package ghostel
     :straight t
     :config
-    (add-to-list 'project-switch-commands '(ghostel-project "Ghostel" ?t) t))
+    (add-to-list 'project-switch-commands '(ghostel-project "Ghostel" ?t) t)
+    (keymap-set project-prefix-map "t" #'ghostel-project)
+    )
 #+END_SRC
 
 **** tabsession
