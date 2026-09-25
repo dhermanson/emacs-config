@@ -551,6 +551,21 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 #+END_SRC
 
 
+
+**** orderless
+
+#+BEGIN_SRC emacs-lisp
+  (use-package orderless
+    :straight t
+    :config
+    (setq completion-styles '(orderless basic)
+          enable-recursive-minibuffers t
+          read-file-name-completion-ignore-case t
+          read-buffer-completion-ignore-case t
+          completion-ignore-case t)
+    )
+#+END_SRC
+
 **** corfu
 
 #+BEGIN_SRC emacs-lisp
@@ -662,24 +677,24 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 
 ** keybindings
 
-*** TODO: move these into appropriate use-package declaration
-
 
 #+BEGIN_SRC emacs-lisp
-  ;; super key bindings
-  (keymap-global-set "s-?" #'help-command)
-  (keymap-global-set "s-o" #'delete-other-windows)
-  (keymap-global-set "s-c" #'delete-window)
-  (keymap-global-set "s-C" #'delete-frame)
-  (keymap-global-set "s-q" #'kill-buffer)
-  (keymap-global-set "s-n" #'make-frame-command)
-  (keymap-global-set "s-w" #'save-buffer)
+  (use-package emacs
+    :config
 
-  ;; meta key bindings
-  (keymap-global-set "M-o" #'other-window)
-  (keymap-global-set "M-O" '(lambda () (interactive) (other-window -1)))
+    ;; super key bindings
+    (keymap-global-set "s-?" #'help-command)
+    (keymap-global-set "s-o" #'delete-other-windows)
+    (keymap-global-set "s-c" #'delete-window)
+    (keymap-global-set "s-C" #'delete-frame)
+    (keymap-global-set "s-q" #'kill-buffer)
+    (keymap-global-set "s-n" #'make-frame-command)
+    (keymap-global-set "s-w" #'save-buffer)
+    (keymap-global-set "s-x" #'execute-extended-command)
 
-
+    ;; meta key bindings
+    (keymap-global-set "M-o" #'other-window)
+    (keymap-global-set "M-O" '(lambda () (interactive) (other-window -1))))
 #+END_SRC
 
 ** closing items
