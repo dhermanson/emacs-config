@@ -312,8 +312,13 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     :init
     (setq org-adapt-indentation t
           org-hide-leading-stars t
-          org-startup-indented t)
-    )
+          org-startup-indented t
+    ;; Define your main Org directory
+    org-directory "~/org"
+
+    ;; Tell Org Agenda where to look for your files
+    ;; This includes all .org files directly inside your ~/Org folder
+    org-agenda-files '("~/org")))
 #+END_SRC
 
 
