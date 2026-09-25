@@ -462,6 +462,12 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 #+END_SRC
 
 
+**** consult
+
+#+BEGIN_SRC emacs-lisp
+  (use-package consult
+    :straight t)
+#+END_SRC
 
 **** embark
 
@@ -484,17 +490,18 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
                  '("\\`\\*Embark Collect \\(Live\Vert{}Completions\\)\\*"
                    (nil (window-parameters (mode-line-format . none))))))
 
+#+END_SRC
+
+
+**** embark-consult
+
+#+BEGIN_SRC emacs-lisp
   ;; Optional but highly recommended if you use the Consult package
   (use-package embark-consult
     :straight t
     :hook
     (embark-collect-mode . consult-preview-at-point-mode))
-
 #+END_SRC
-
-
-
-
 
 **** ghostel
 
