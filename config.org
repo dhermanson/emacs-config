@@ -31,6 +31,7 @@
 :header-args:emacs-lisp+: :mkdirp yes
 :END:
 
+
 ** lexical scope
 #+BEGIN_SRC emacs-lisp
   ;;; -*- lexical-binding: t; -*-
@@ -60,6 +61,15 @@
 
 ** general settings
 
+*** unbind keys
+
+#+BEGIN_SRC emacs-lisp
+  (keymap-global-unset "s-m")
+  (keymap-global-unset "s-o")
+  (keymap-global-unset "s-q")
+  (keymap-global-unset "s-w")
+  (keymap-global-unset "s-s")
+#+END_SRC
 *** ux
 
 use y or n instead of yes or no
@@ -163,7 +173,7 @@ don't show the startup screen
 
 This currently isn't being tangled because it's causing emacs to crash. Figure out what's going wrong. And maybe re-enable it.
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC emacs-lisp
   (use-package dired
     :straight (:type built-in)
     :config
@@ -197,6 +207,29 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     ;; Quick shortcut to toggle hidden/dot files
     (:map dired-mode-map
           ("." . dired-omit-mode)))
+#+END_SRC
+
+
+**** tab-bar
+
+#+BEGIN_SRC emacs-lisp
+  (use-package tab-bar
+    :straight (:type built-in)
+    :config
+    
+    ;; TODO: convert these to :bind
+    (keymap-global-set "C-s-n" #'tab-next)
+    (keymap-global-set "C-S-s-n" '(lambda ()
+                                  (interactive)
+                                  (tab-bar-move-tab 1)))
+    (keymap-global-set "C-s-p" #'tab-previous)
+    (keymap-global-set "C-S-s-p" '(lambda ()
+                                  (interactive)
+                                  (tab-bar-move-tab -1)))
+    (keymap-global-set "C-s-m" #'tab-new)
+    (keymap-global-set "C-s-c" #'tab-close)
+    (keymap-global-set "C-s-r" #'tab-rename)
+    )
 #+END_SRC
 
 **** use-package
@@ -300,6 +333,8 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 #+BEGIN_SRC emacs-lisp
   (use-package project
     :straight (:type built-in)
+    :bind-keymap
+    ("s-p" . project-prefix-map)
     :config
     (add-to-list 'project-switch-commands '(project-dired "Dired" ?D) t))
 #+END_SRC
@@ -330,6 +365,15 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
           evil-kill-on-visual-paste nil
           evil-split-window-below t
           evil-vsplit-window-right t)
+    :bind
+    (
+     ("s-v" . evil-window-vsplit)
+     ("s-s" . evil-window-split)
+     ("s-H" . evil-window-move-far-left)
+     ("s-J" . evil-window-move-very-bottom)
+     ("s-K" . evil-window-move-very-top)
+     ("s-L" . evil-window-move-far-right)
+     )
     :config
     ;; prefer emacs state to motion state
     (dolist (mode evil-motion-state-modes)
@@ -341,6 +385,21 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     (evil-set-initial-state 'dired-mode 'emacs)
     (evil-set-initial-state 'org-mode 'normal)
     (evil-set-initial-state 'xref--xref-buffer-mode 'normal)
+
+
+    (evil-set-leader 'normal (kbd "SPC"))
+    (evil-define-key 'normal prog-mode-map
+      "gcc" 'comment-line
+      (kbd "<leader>oi") 'my/helpers/open-current-line-in-intellij)
+
+    (evil-define-key 'visual prog-mode-map
+      "gc" 'comment-or-uncomment-region)
+    ;; (keymap-set evil-normal-state-map "g c c" #'comment-line)
+    ;; (keymap-set evil-visual-state-map "g c"   #'comment-or-uncomment-region)
+
+    (evil-define-key 'insert global-map
+      (kbd "C-SPC") 'completion-at-point)
+    
     (evil-mode 1))
 #+END_SRC
 
@@ -349,6 +408,13 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
   ;; magit
   (use-package magit
     :straight t
+    :bind
+    (
+     ("s-g" . 'magit-file-dispatch)
+     :map magit-status-mode-map
+     ("s-m e" . my/helpers/magit-status-ediff-current-file)
+     ("s-e" . my/helpers/magit-status-ediff-current-file)
+     )
     :config
     (keymap-set project-prefix-map "v" #'magit-status)
     (transient-append-suffix 'magit-file-dispatch "G"
@@ -448,8 +514,8 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     :straight ( :type git
                 :host github
                 :repo "dhermanson/tabsession" )
-    ;; :bind-keymap
-    ;; ("s-t" . tabsession-keymap)
+    :bind-keymap
+    ("s-t" . tabsession-keymap)
     :config
     (tabsession-mode 1))
 #+END_SRC
@@ -473,7 +539,6 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
     :straight t
-    :defer 10
     :config
     (vertico-mode))
 #+END_SRC
@@ -590,17 +655,11 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 
 ** keybindings
 
+*** TODO: move these into appropriate use-package declaration
+
 
 #+BEGIN_SRC emacs-lisp
-  (keymap-global-unset "s-m")
-  (keymap-global-unset "s-o")
-  (keymap-global-unset "s-q")
-  (keymap-global-unset "s-w")
-  (keymap-global-unset "s-s")
-
   ;; super key bindings
-  (keymap-global-set "s-t" tabsession-keymap)
-  (keymap-global-set "s-p" project-prefix-map)
   (keymap-global-set "s-?" #'help-command)
   (keymap-global-set "s-o" #'delete-other-windows)
   (keymap-global-set "s-c" #'delete-window)
@@ -608,52 +667,10 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
   (keymap-global-set "s-q" #'kill-buffer)
   (keymap-global-set "s-n" #'make-frame-command)
   (keymap-global-set "s-w" #'save-buffer)
-  (keymap-global-set "s-v" #'evil-window-vsplit)
-  (keymap-global-set "s-s" #'evil-window-split)
-  (keymap-global-set "s-g" #'magit-file-dispatch)
-  (keymap-global-set "s-H" #'evil-window-move-far-left)
-  (keymap-global-set "s-J" #'evil-window-move-very-bottom)
-  (keymap-global-set "s-K" #'evil-window-move-very-top)
-  (keymap-global-set "s-L" #'evil-window-move-far-right)
 
   ;; meta key bindings
   (keymap-global-set "M-o" #'other-window)
   (keymap-global-set "M-O" '(lambda () (interactive) (other-window -1)))
-
-  ;; control-super key bindings
-  (keymap-global-set "C-s-n" #'tab-next)
-  (keymap-global-set "C-S-s-n" '(lambda ()
-                                (interactive)
-                                (tab-bar-move-tab 1)))
-  (keymap-global-set "C-s-p" #'tab-previous)
-  (keymap-global-set "C-S-s-p" '(lambda ()
-                                (interactive)
-                                (tab-bar-move-tab -1)))
-  (keymap-global-set "C-s-m" #'tab-new)
-  (keymap-global-set "C-s-c" #'tab-close)
-  (keymap-global-set "C-s-r" #'tab-rename)
-
-
-  ;; meta-super key bindings
-  (keymap-global-set "M-s-g" #'magit-status)
-
-  (evil-set-leader 'normal (kbd "SPC"))
-  (evil-define-key 'normal prog-mode-map
-    "gcc" 'comment-line
-    (kbd "<leader>oi") 'my/helpers/open-current-line-in-intellij)
-
-  (evil-define-key 'visual prog-mode-map
-    "gc" 'comment-or-uncomment-region)
-  ;; (keymap-set evil-normal-state-map "g c c" #'comment-line)
-  ;; (keymap-set evil-visual-state-map "g c"   #'comment-or-uncomment-region)
-
-  (evil-define-key 'insert global-map
-    (kbd "C-SPC") 'completion-at-point)
-
-  (keymap-set magit-status-mode-map "s-m e"  #'my/helpers/magit-status-ediff-current-file)
-  (keymap-set magit-status-mode-map "s-e"  #'my/helpers/magit-status-ediff-current-file)
-
-  ;; (keymap-set prog-mode-map "s-m o i" #'my/helpers/open-current-line-in-intellij)
 
 
 #+END_SRC
