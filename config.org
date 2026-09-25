@@ -384,7 +384,6 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     (evil-set-initial-state 'conf-mode 'normal)
     (evil-set-initial-state 'dired-mode 'emacs)
     (evil-set-initial-state 'org-mode 'normal)
-    (evil-set-initial-state 'xref--xref-buffer-mode 'normal)
 
 
     (evil-set-leader 'normal (kbd "SPC"))
