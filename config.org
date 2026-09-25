@@ -469,6 +469,18 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     :straight t)
 #+END_SRC
 
+
+**** marginalia
+
+#+BEGIN_SRC emacs-lisp
+  (use-package marginalia
+    :straight t
+    :bind (:map minibuffer-local-map
+                ("M-A" . marginalia-cycle))
+    :init
+    (marginalia-mode))
+#+END_SRC
+
 **** embark
 
 #+BEGIN_SRC emacs-lisp
