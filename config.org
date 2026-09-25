@@ -458,9 +458,12 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 
 **** vertico
 
+***** TODO: figure out why it must be deferred. maybe we should defer everything. without defer here, I always get a segmentation fault when starting emacs
+
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
     :straight t
+    :defer 10
     :config
     (vertico-mode))
 #+END_SRC
@@ -477,7 +480,7 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     ;; (corfu-auto t)                 ;; Enable auto-completion
     ;; (corfu-auto-prefix 2)          ;; Minimum length/chars before popping up
     ;; (corfu-auto-delay 0.2)         ;; Delay seconds before showing popup
-    :init
+    :config
     (global-corfu-mode))
 #+END_SRC
 
@@ -494,7 +497,7 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
   ;;        ("C-c p h" . cape-history)
   ;;        ("C-c p f" . cape-file)
   ;;        ...)
-  :init
+  :config
   ;; Add to the global default value of `completion-at-point-functions' which is
   ;; used by `completion-at-point'.  The order of the functions matters, the
   ;; first function returning a result wins.  Note that the list of buffer-local
