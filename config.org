@@ -306,6 +306,13 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 
 *** extra
 
+**** markdown
+
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :straight t)
+#+END_SRC
+
 **** evil
 #+BEGIN_SRC emacs-lisp
   ;; evil
@@ -362,15 +369,18 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     
     ;; Optional: Highlights matching pairs visually
     (show-smartparens-global-mode t)
+    (sp-use-smartparens-bindings)
+    ;; (sp-use-paredit-bindings)
     
     ;; Optional: If you want strict structural safety (like Paredit)
     ;; (smartparens-strict-mode t)
     
-    :bind (:map smartparens-mode-map
-                ;; Example replacements for modern, conflict-free wrapping/unwrapping
-                ("M-[" . sp-wrap-square)
-                ("M-{" . sp-wrap-curly)
-                ("C-M-d" . sp-unwrap-sexp)))
+    ;; :bind (:map smartparens-mode-map
+    ;;             ;; Example replacements for modern, conflict-free wrapping/unwrapping
+    ;;             ("M-[" . sp-wrap-square)
+    ;;             ("M-{" . sp-wrap-curly)
+    ;;             ("C-M-d" . sp-unwrap-sexp))
+    )
 
 #+END_SRC
 
