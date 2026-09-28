@@ -490,6 +490,8 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 #+BEGIN_SRC emacs-lisp
   (use-package embark
     :straight t
+    :after
+    embark-consult ; to remove warning message about consult
 
     :bind
     (("C-."   . embark-act)         ; Pick an action for the target at point
