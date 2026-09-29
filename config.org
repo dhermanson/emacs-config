@@ -720,7 +720,7 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 *** custom file
 #+BEGIN_SRC emacs-lisp
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (load custom-file 'noerror)
+  (load custom-file 'noerror 'nomessage)
 #+END_SRC
 
 *** provide init
