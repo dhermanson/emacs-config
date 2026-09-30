@@ -318,7 +318,9 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
 
     ;; Tell Org Agenda where to look for your files
     ;; This includes all .org files directly inside your ~/Org folder
-    org-agenda-files '("~/org")))
+    org-agenda-files '("~/org"))
+    :bind
+    ("C-c o c" . 'org-capture))
 #+END_SRC
 
 
