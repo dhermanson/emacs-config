@@ -323,7 +323,11 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     ;; This includes all .org files directly inside your ~/Org folder
     org-agenda-files '("~/org")
 
-    org-default-notes-file (concat org-directory "/inbox.org"))
+    org-default-notes-file (concat org-directory "/inbox.org")
+
+    org-capture-templates
+    '(("t" "Todo" entry (file "inbox.org")
+       "* TODO %?\n  %i\n  %a")))
     :bind
     ("C-c o c" . 'org-capture)
     ("C-c o a" . 'org-agenda))
@@ -631,6 +635,15 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
   ;; (add-hook 'completion-at-point-functions #'cape-history)
   ;; ...
 )
+#+END_SRC
+
+
+**** rainbow-delimeters
+     
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :straight t
+    :hook (prog-mode . rainbow-delimiters-mode))
 #+END_SRC
 
 ** hooks
