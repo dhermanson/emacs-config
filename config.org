@@ -736,6 +736,61 @@ This currently isn't being tangled because it's causing emacs to crash. Figure o
     (keymap-global-set "M-O" '(lambda () (interactive) (other-window -1))))
 #+END_SRC
 
+
+
+
+** SHAME
+clean these things up. move them into the appropriate place
+
+*** browse-at-remote
+#+begin_src emacs-lisp
+  (use-package browse-at-remote
+    :straight t
+    :config
+    (setq browse-at-remote-remote-type-regexps
+          (append browse-at-remote-remote-type-regexps '((:host "^ssh\\.dev\\.azure\\.com$" :type "azdo"))))
+
+    (defun browse-at-remote--format-region-url-as-azdo (repo-url location filename &optional linestart lineend)
+      "Format the Azure Devops region url."
+
+      (let* ((unprefixed-url (replace-regexp-in-string "^https://ssh.dev.azure.com/v3/"
+                                                       ""
+                                                       repo-url))
+             (s (split-string unprefixed-url "/"))
+             (organization (nth 0 s))
+             (project (nth 1 s))
+             (repo (nth 2 s))
+             (lines (cond
+                     (lineend (format "&line=%d&lineEnd=%d&lineStartColumn=0&lineEndColumn=1000&lineStyle=plain&_a=contents" linestart lineend))
+                     (linestart (format "&line=%d&lineEnd=%d&lineStartColumn=0&lineEndColumn=1000&lineStyle=plain&_a=contents" linestart linestart))
+                     (t ""))))
+
+        (if (s-equals-p filename "./")
+            (format "https://dev.azure.com/%s/%s/_git/%s?version=GB%s%s"
+                    organization project repo location lines)
+          (format "https://dev.azure.com/%s/%s/_git/%s?path=/%s&version=GB%s%s"
+                  organization project repo filename location lines))))
+
+    (defun browse-at-remote--format-commit-url-as-azdo (repo-url commithash)
+      "Format the Azure Devops region url."
+      (let* ((unprefixed-url (replace-regexp-in-string "^https://ssh.dev.azure.com/v3/"
+                                                       ""
+                                                       repo-url))
+             (s (split-string unprefixed-url "/"))
+             (organization (nth 0 s))
+             (project (nth 1 s))
+             (repo (nth 2 s))
+             (fullrev (magit-rev-hash commithash)))
+      
+        (format "https://dev.azure.com/%s/%s/_git/%s/commit/%s"
+                organization project repo fullrev))
+    
+      )
+    :bind
+    (("C-c g g" . browse-at-remote))
+
+    )
+#+end_src
 ** closing items
 
 *** custom file
